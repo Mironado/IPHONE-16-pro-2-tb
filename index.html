@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Потрать деньги Трампа</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div id="trumpPhoto" onclick="redirectToEasterEgg()">
+        <img src="https://san.com/wp-content/uploads/2025/02/Trump-sanctions-ICC-GETTY.jpg" alt="Дональд Трамп" id="trumpImage">
+    </div>
+    
+    <h1>Потрать деньги Доналда Трампа</h1>
+    <div id="balance">Баланс: ₽<span id="balanceAmount">4,500,000,000</span></div>
+    
+    <div id="items"></div>
+
+    
+    <div id="modal" onclick="closeModal()">
+        <img id="modalImage" src="" alt="Трамп фото">
+    </div>
+    
+    <script>
+        let balance = 4500000000;
+        const items = [
+            { name: "Чашка кофе", price: 5, image: "https://pancoffee.ru/wp-content/uploads/2021/05/2.jpg" },
+            { name: "Айфон 15", price: 999, image: "https://trashbox.ru/ifiles/1970508_4449fc_03/indijskaya-haltura-apple-vernyot-chast-proizvodstva-iphone-obratno-v-kitaj-1.jpg" },
+            { name: "Автомобиль Tesla                           в", price: 50000, image: "https://avatars.mds.yandex.net/get-entity_search/371130/985220303/S600xU_2x" },
+            { name: "Особняк в Майами", price: 2000000, image: "https://st.hzcdn.com/simgs/pictures/exteriors/casa-clara-dunagan-diverio-design-group-img~7721617009109b0e_9-9504-1-3462568.jpg" },
+            { name: "Футбольный клуб", price: 500000000, image: "https://www.sports.ru/dynamic_images/news/111/451/771/5/share/3fd259_no_logo_no_text.jpg" },
+            { name: "Роскошный парусник", price: 100000000, image: "https://i.pinimg.com/originals/75/38/15/7538151edea7dd887e14774714cbcc71.jpg" },
+            { name: "Часы Rolex", price: 50000, image: "https://avatars.mds.yandex.net/i?id=8211d54625322955727acfcd16e8f726_l-7543894-images-thumbs&n=13" },
+            { name: "Вилла в Беверли Хиллз", price: 25000000, image: "https://i.pinimg.com/originals/c2/c8/ef/c2c8ef850f5e870ae7c3c9f6c30d0dd5.png" },
+            { name: "Суперкар Lamborghini", price: 3000000, image: "https://avatars.mds.yandex.net/get-mpic/4334746/img_id738906421515332752.jpeg/orig" },
+            { name: "Джакузи", price: 15000, image: "https://santreyd.ru/upload/iblock/8ab/8abc7a31fd388db3f508cc6c9a2723f0.jpeg" },
+            { name: "Гольф-курорт", price: 50000000, image: "https://www.gorkigolf.ru/pic/full/files/lists/News/1242_Image_1527774902_IMG_3820.jpg" },
+            { name: "Космический билет", price: 55000000, image: "https://s0.rbk.ru/v6_top_pics/resized/600xH/media/img/6/76/346843114620766.webp" },
+            { name: "Яхта", price: 100000000, image: "https://avatars.mds.yandex.net/i?id=6c49c71c247507af8ba07641de9114dd_l-7552276-images-thumbs&ref=rim&n=13&w=750&h=482" },
+            { name: "Золотая монета", price: 500000, image: "https://zoloto-md.ru/assets/images/products/7344/168317-obv.jpg" },
+            { name: "Гелик Mercedes-Benz", price: 100000, image: "https://avatars.mds.yandex.net/i?id=979acedff67f933cbd88f3f93e19f4eb1d445acb-8350343-images-thumbs&n=13&ref=image_snippet_one" },
+            { name: "Пентхаус в Нью-Йорке", price: 10000000, image: ".https://i.pinimg.com/736x/80/04/a3/8004a3861701adb7be86c203e5adde33.jpg" },
+            { name: "бетмен (Авто)", price: 500000, image: "https://moundji.com/wp-content/uploads/2012/04/IMG_0407.jpg" },
+            { name: "Скейтборд", price: 100, image: "https://rc-today.ru/UserFiles/Image/7f/5d/skeitbord_larsen_street_1_r31h8_070_245173_5ad89f0eab7fd_6406_big.jpg" },
+            { name: "Дуэйн Джонсон на часик", price: 1000000, image: "https://avatars.mds.yandex.net/i?id=098648e27d87efa35e5d5ebbbb14f48d_l-5219321-images-thumbs&n=13" },
+            { name: "Смарт-очки", price: 250, image: "https://avatars.mds.yandex.net/i?id=36f75e2fd5fd25eb8458712e4eaa4390_l-12402586-images-thumbs&n=13" },
+            { name: "Мотоцикл Harley-Davidson", price: 30000, image: "https://avatars.mds.yandex.net/get-autoru-vos/2174600/a29c8056a9502adf1af6353466237092/1200x900" },
+        ];
+
+        function updateBalance() {
+            document.getElementById("balanceAmount").innerText = balance.toLocaleString();
+        }
+
+        function buyItem(price) {
+            if (balance >= price) {
+                balance -= price;
+                updateBalance();
+            }
+        }
+
+        function renderItems() {
+            const container = document.getElementById("items");
+            container.innerHTML = "";
+            items.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "item";
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="item-image">
+                    <span>${item.name} - $${item.price.toLocaleString()}</span>
+                    <button class="btn" onclick="buyItem(${item.price})">Купить</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function redirectToEasterEgg() {
+            window.location.href = "https://www.youtube.com/watch?v=101aqh5WV3Q";
+        }
+
+        updateBalance();
+        renderItems();
+    </script>
+</body>
+<h4>Донкальд тримп"</h4>
+</html>
